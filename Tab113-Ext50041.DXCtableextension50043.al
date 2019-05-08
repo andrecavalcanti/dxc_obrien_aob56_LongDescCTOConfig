@@ -1,8 +1,8 @@
-tableextension 50045 "DXCtableextension50045" extends "Sales Line" //37
-{
-     fields
+tableextension 50041 "DXCtableextension50043" extends "Sales Invoice Line" //113
+{   
+    fields
     {        
-        field(50001;"DXC ATO Description";Text[150])
+        field(50002;"DXC ATO Description";Text[150])
         {
             Caption = 'ATO Description';
             DataClassification = ToBeClassified;

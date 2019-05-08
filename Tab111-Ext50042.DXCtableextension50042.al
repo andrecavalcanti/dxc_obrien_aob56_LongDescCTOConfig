@@ -2,7 +2,7 @@ tableextension 50042 "DXCtableextension50042" extends "Sales Shipment Line" //11
 {
     fields
     {        
-        field(50001;"DXC ATO Description";Text[150])
+        field(50002;"DXC ATO Description";Text[150])
         {
             Caption = 'ATO Description';
             DataClassification = ToBeClassified;
