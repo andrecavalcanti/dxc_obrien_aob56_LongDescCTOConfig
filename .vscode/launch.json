@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "al",
+            "request": "launch",            
+            "name": "Your own server",
+            "server": "http://172.28.24.156",                    
+            "serverInstance": "NAV",
+            "port"  : 7049, 
+            "authentication": "Windows",
+            //"tenant": "default",
+            //"startupObjectId": 22,
+           "schemaUpdateMode": "Synchronize"
+           //"schemaUpdateMode": "Recreate"
+            //"startupObjectType": "Page",
+            //"breakOnError": true
+        }
+    ]
+}
