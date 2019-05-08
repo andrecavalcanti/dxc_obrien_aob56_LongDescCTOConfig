@@ -24,8 +24,9 @@ tableextension 50044 "DXCtableextension50044" extends "Sales Header" //36
         SalesLine.SETFILTER("Checklist No.",'<>%1','');
         IF SalesLine.FINDFIRST THEN REPEAT
 
+          CheckListHeader.Reset;
           CheckListHeader.SETRANGE("No.",SalesLine."Checklist No.");
-          CheckListHeader.FIND;
+          CheckListHeader.FINDFIRST;
 
           ATODescription := SalesLine."DXC ATO Description";
 
