@@ -7,7 +7,9 @@ pageextension 50103 "DXCCheckListExt" extends "Checklist" //5013682
             action(DXCAutoPopulateCheckList)
             {
                 Caption = 'Auto Populate CheckList';
-                Image = Recalculate;              
+                Image = Recalculate; 
+                Promoted = true;
+                PromotedCategory = Process;             
             }
         }
     } 
