@@ -1,32 +1,33 @@
-tableextension 50044 "DXCtableextension50044" extends "Sales Header" //36
-{ 
-
-  [Scope('Personalization')]
-    procedure DXCPopulateCheckList();
+codeunit 50007 "DXCLongDescCTOConfig"
+{
+  procedure DXCPopulateCheckList(PCheckListHeader : Record "Checklist Header");
     var
         CheckListLine : Record "Checklist Line";
-        CheckListHeader : Record "Checklist Header";
+        // CheckListHeader : Record "Checklist Header";
         TextSplit : array [10] of Text;
         ATODescription : Text;
         i : Integer;
         NumberInsideParenthesis : Text;
         CodeOutsideParenthesis : Text;
         HeatModelNumber : Text;
-        SalesLine : Record "Sales Line";
+        SalesLine : Record "Sales Line";       
+        Text50000 : Label '(';
+        Text50001 : Label ')';
     begin
 
         // >> AOB-56
 
         SalesLine.SETRANGE("Document Type",SalesLine."Document Type"::Order);
-        SalesLine.SETRANGE("Document No.","No.");
+        // SalesLine.SETRANGE("Document No.","No.");
         SalesLine.SETRANGE(Type,SalesLine.Type::Item);
         SalesLine.SETFILTER("DXC ATO Description",'<>%1','');
-        SalesLine.SETFILTER("Checklist No.",'<>%1','');
+        // SalesLine.SETFILTER("Checklist No.",'<>%1','');
+        SalesLine.SETRANGE("Checklist No.",PCheckListHeader."No.");
         IF SalesLine.FINDFIRST THEN REPEAT
 
-          CheckListHeader.Reset;
-          CheckListHeader.SETRANGE("No.",SalesLine."Checklist No.");
-          CheckListHeader.FINDFIRST;
+        //   CheckListHeader.Reset;
+        //   CheckListHeader.SETRANGE("No.",SalesLine."Checklist No.");
+        //   CheckListHeader.FINDFIRST;
 
           ATODescription := SalesLine."DXC ATO Description";
 
@@ -35,8 +36,8 @@ tableextension 50044 "DXCtableextension50044" extends "Sales Header" //36
 
           COMPRESSARRAY(TextSplit);
 
-          CheckListLine.SETRANGE("Document No.",CheckListHeader."No.");
-          CheckListLine.SETRANGE("Checklist Type",CheckListHeader."Checklist Type");
+          CheckListLine.SETRANGE("Document No.",PCheckListHeader."No.");
+          CheckListLine.SETRANGE("Checklist Type",PCheckListHeader."Checklist Type");
 
           FOR i := 1 TO ARRAYLEN(TextSplit) DO BEGIN
 
@@ -94,9 +95,10 @@ tableextension 50044 "DXCtableextension50044" extends "Sales Header" //36
         // << AOB-56
     end;
 
-    var
-       
-        Text50000 : Label '(';
-        Text50001 : Label ')';
+    [EventSubscriber(ObjectType::Page, Page::Checklist, 'OnAfterActionEvent', 'DXCAutoPopulateCheckList', false, false)]
+    local procedure HandleAfterActionDXCAutoPopulateCheckListOnChecklist(var Rec : Record "Checklist Header")
+    begin
+        DXCPopulateCheckList(Rec);  
+    end;
+    
 }
-
